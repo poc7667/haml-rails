@@ -24,7 +24,7 @@ module Haml
     protected
 
       def available_views
-        %w(index edit show new)
+        %w(index edit show new _hstore_attributes)
       end
 
       def handler

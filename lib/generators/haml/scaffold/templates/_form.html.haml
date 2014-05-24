@@ -1,15 +1,39 @@
-= form_for @<%= singular_table_name %> do |f|
-  - if @<%= singular_table_name %>.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@<%= singular_table_name %>.errors.count, "error")} prohibited this <%= singular_table_name %> from being saved:"
-      %ul
-        - @<%= singular_table_name %>.errors.full_messages.each do |msg|
-          %li= msg
+.row  
+  .col-xs-12
+    = form_for @<%= singular_table_name %>, :html=> {class: "form-horizontal"} do |f|
+      - if @<%= singular_table_name %>.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@<%= singular_table_name %>.errors.count, "error")} prohibited this <%= singular_table_name %> from being saved:"
+          %ul
+            - @<%= singular_table_name %>.errors.full_messages.each do |msg|
+              %li= msg
 
-<% for attribute in attributes -%>
-  .field
-    = f.label :<%= attribute.name %>
-    = f.<%= attribute.field_type %> :<%= attribute.name %>
-<% end -%>
-  .actions
-    = f.submit 'Save'
+  <% for attribute in attributes -%>
+    <% if attribute.type.to_sym == :hstore -%>      
+      - hstore_field = f.object.send(:<%= attribute.name %>)
+      - if hstore_field.nil? or hstore_field.length == 0
+        .form-group
+          .form-inputs
+            .div.form-group
+              = f.label :<%= attribute.name %> , class:'col-sm-3 control-label no-padding-right', for: 'form-field-1'
+              .col-sm-9
+                = f.text_area :<%= attribute.name %>, class: 'input-xxlarge'
+        .space-4
+      - else       
+        - f.object.send(:<%= attribute.name %>).try(:each) do |key, value|
+          = f.fields_for :<%= attribute.name %> do |d|      
+            = render :partial => 'hstore_attributes' , :locals => { f: f, column: key, d: d, value: value }
+    <% else -%>      
+      .form-group
+        .form-inputs
+          .div.form-group
+            = f.label :<%= attribute.name %> , class:'col-sm-3 control-label no-padding-right', for: 'form-field-1'
+            .col-sm-9
+              = f.text_field :<%= attribute.name %>, class: 'input-xxlarge'
+      .space-4
+    <% end -%>      
+  <% end -%>
+
+      .clearfix.form-actions
+        .col-md-offset-3.col-md-9
+          = f.submit 'Save', class: 'btn btn-info'
