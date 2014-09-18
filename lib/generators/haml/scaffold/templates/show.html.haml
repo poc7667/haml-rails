@@ -1,10 +1,17 @@
 - if notice
   %p.alert.alert-success= notice
 
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+    %th.center Field
+    %th.center Value
+
 <% for attribute in attributes -%>
-%p
-  %b <%= attribute.human_name %>:
-  = @<%= singular_table_name %>.<%= attribute.name %>
+
+  %tr
+    %td.center= <%= attribute.human_name %>
+    %td.center= @<%= singular_table_name %>.<%= attribute.name %>
 
 <% end -%>
 
