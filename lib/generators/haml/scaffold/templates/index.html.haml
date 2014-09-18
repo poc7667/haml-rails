@@ -6,9 +6,10 @@
 <% for attribute in attributes -%>
     %th.center <%= attribute.human_name %>
 <% end -%>
-      %th.center
-      %th.center
-      %th.center
+
+    %th.center
+    %th.center
+    %th.center
 
   - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
     %tr
