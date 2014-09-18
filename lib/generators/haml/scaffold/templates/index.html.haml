@@ -17,8 +17,8 @@
       %td.center= <%= singular_table_name %>.<%= attribute.name %>
 <% end -%>
       %td.center= link_to 'Show', <%= singular_table_name %>, :class => "btn btn-xs btn-success"
-      %td= link_to 'Edit', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), :class => "btn btn-xs btn-warning"
-      %td= link_to 'Destroy', <%= singular_table_name %>, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => "btn btn-xs btn-danger"
+      %td.center= link_to 'Edit', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), :class => "btn btn-xs btn-warning"
+      %td.center= link_to 'Destroy', <%= singular_table_name %>, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => "btn btn-xs btn-danger"
 %br
 
 = link_to 'New <%= human_name %>', new_<%= singular_table_name %>_path, :class => "btn btn-info"
