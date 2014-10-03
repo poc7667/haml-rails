@@ -24,6 +24,21 @@
         = f.fields_for :<%= attribute.name %> do |d|
           = render :partial => 'hstore_attributes' , :locals => { f: f, column: key, d: d, value: value }
     <% else -%>
+      <% if :user==attribute.name.to_sym || :user_id==attribute.name.to_sym -%>
+
+      = f.hidden_field :user_id,:value => current_user.id
+
+      <% elsif :comment==attribute.name.to_sym -%>
+
+      .form-group
+        .form-inputs
+          .div.form-group
+            = f.label :<%= attribute.name %> , class:'col-sm-3 control-label no-padding-right', for: 'form-field-1'
+            .col-sm-9
+              = f.text_area :<%= attribute.name %>, class: 'input-xxlarge', :rows => '3', :cols => '80', placeholder: "輸入測試備註，以利查閱"
+      .space-4
+
+      <% else -%>
 
       .form-group
         .form-inputs
@@ -32,6 +47,9 @@
             .col-sm-9
               = f.text_field :<%= attribute.name %>, class: 'input-xxlarge'
       .space-4
+
+      <% end -%>
+
   <% end -%>
 <% end -%>
 

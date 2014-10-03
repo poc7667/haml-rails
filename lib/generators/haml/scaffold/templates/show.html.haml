@@ -10,7 +10,7 @@
 <% for attribute in attributes -%>
 
   %tr
-    %td.center= <%= attribute.human_name %>
+    %td.center= "<%= attribute.human_name %>"
     %td.center= @<%= singular_table_name %>.<%= attribute.name %>
 
 <% end -%>
